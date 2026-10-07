@@ -26,13 +26,14 @@ def load(src):
     return d
 
 
-if CSV.exists():
+up = st.sidebar.file_uploader("Upload your own CSV (optional)", type="csv")
+if up is not None:
+    df = load(up)
+elif CSV.exists():
     df = load(CSV)
 else:
-    up = st.file_uploader("Upload cleaned_shopping_trends.csv", type="csv")
-    if up is None:
-        st.stop()
-    df = load(up)
+    st.info("Upload a CSV to get started.")
+    st.stop()
 
 # ---------- Sidebar filters ----------
 st.sidebar.header("🔎 Filter customers")
